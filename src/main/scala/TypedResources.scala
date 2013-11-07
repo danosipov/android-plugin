@@ -80,6 +80,13 @@ object TypedResources {
               |trait TypedViewHolder {
               |  def findViewById( id: Int ): View
               |  def findView[T](tr: TypedResource[T]) = findViewById(tr.id).asInstanceOf[T]
+              |  implicit def onClickListener(f: (View => Unit)): View.OnClickListener = {
+              |    new View.OnClickListener() {
+              |      override def onClick(v: View) {
+              |        f(v)
+              |      }
+              |    }
+              |  }
               |}
               |trait TypedView extends View with TypedViewHolder
               |trait TypedActivityHolder extends TypedViewHolder
